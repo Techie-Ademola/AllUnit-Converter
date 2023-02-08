@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Unit Converter</title>
+    <link rel="stylesheet" href="./index.css">
+    
+</head>
+<body>
+    <main>
+        <form>
+            <h1>Unit Converter App</h1>
+            <input type="text" id="input" required placeholder="Enter a value..."></input>
+            <div class="select-wrapper">
+                <select id="unit-from">
+                    <option value="meters">mtr</option>
+                    <option value="centimeters">cm</option>
+                    <option value="milliliters">ml</option>
+                    <option value="liters">ltr</option>
+                    <option value="feets">ft</option>
+                    <option value="gallons">gal</option>
+                    <option value="pounds">lb</option>
+                    <option value="kilograms">kg</option>
+                    <option value="grams">g</option>
+                </select>
+                <select id="unit-to">
+                    <option value="centimeters">cm</option>
+                    <option value="meters">mtr</option>
+                    <option value="liters">ltr</option>
+                    <option value="milliliters">ml</option>
+                    <option value="gallons">gal</option>
+                    <option value="feets">ft</option>
+                    <option value="grams">g</option>
+                    <option value="kilograms">kg</option>
+                    <option value="pounds">lb</option>
+                </select>
+            </div>
+            <button type="button" onclick="convert()">Convert</button>
+            <p id="output"></p>
+        </form>
+    </main>
+
+
+    <script>
+        function convert() {
+            var input = document.getElementById("input").value;
+            var unitFrom = document.getElementById("unit-from").value;
+            var unitTo = document.getElementById("unit-to").value;
+            document.getElementById("output").innerHTML = '0';
+            var output;
+            
+            if (unitFrom === "meters" && unitTo === "feets") {
+                output = input * 3.2808;
+            } 
+            else if (unitFrom === "liters" && unitTo === "gallons") {
+                output = input / 3.78541;
+            } 
+            else if (unitFrom === "kilograms" && unitTo === "pounds") {
+                output = input / 0.453592;
+            }
+            else if (unitFrom === "meters" && unitTo === "centimeters") {
+                output = input * 100;
+            }
+            else if (unitFrom === "centimeters" && unitTo === "meters") {
+                output = input / 100;
+            }
+            else if (unitFrom === "feets" && unitTo === "meters") {
+                output = input * 0.3048;
+            }
+            else if (unitFrom === "liters" && unitTo === "milliliters") {
+                output = input * 1000;
+            }
+            else if (unitFrom === "milliliters" && unitTo === "liters") {
+                output = input / 1000;
+            }
+            else if (unitFrom === "gallons" && unitTo === "liters") {
+                output = input * 3.78541;
+            }
+            else if (unitFrom === "kilograms" && unitTo === "grams") {
+                output = input * 1000;
+            }
+            else if (unitFrom === "grams" && unitTo === "kilograms") {
+                output = input / 1000;
+            }
+            else if (unitFrom === "pounds" && unitTo === "kilograms") {
+                output = input * 0.453592;
+            }
+            else if (unitFrom === unitTo && unitTo === unitFrom) {
+                alert("Invalid unit convert");
+                document.getElementById("output").innerHTML = "";
+            }
+            else {
+                alert("Invalid unit conversion");
+            }
+
+            document.getElementById("output").innerHTML = output + " " + unitTo;
+        }
+    </script>
+</body>
+</html>

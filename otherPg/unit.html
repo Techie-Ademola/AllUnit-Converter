@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000020;
+        }
+        main {
+            position: relative;
+            padding: 3px;
+            overflow: hidden;
+        }
+        main::before {
+            content: '';
+            position: absolute;
+            inset: -150px 200px;
+            background: linear-gradient(315deg, #00ccff, #d400d4);
+            transition: 0.5s;
+            animation: animate 4s linear infinite;
+            animation-play-state: running;
+            border-radius: 0px;
+            z-index: -1;
+        }
+        main:hover::before {
+            inset: -180px -100px;
+            animation-play-state: paused;
+        }
+        @keyframes animate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        main::after {
+            content: '';
+            position: absolute;
+            inset: -150px 200px;
+            background: linear-gradient(315deg, #d400d4, #00ccff);
+            transition: 0.5s;
+            animation: animate2 4s linear infinite;
+            animation-play-state: running;
+            border-radius: 0px;
+            z-index: -1;
+        }
+        main:hover::after {
+            inset: -180px -100px;
+            animation-play-state: paused;
+        }
+        @keyframes animate2 {
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+        form {
+            width: 500px;
+            max-width: 500px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            z-index: 99;
+            position: relative;
+            background: #000020;
+        }
+        form h1 {
+            font-size: 35px;
+            font-weight: 600;
+            text-align: center;
+            color: cornflowerblue;
+            margin: 50px 0;
+        }
+        form input {
+            width: 100%;
+            padding: 15px;
+            font-size: 20px;
+            color: #111;
+            border-radius: 7px;
+            border: 2px solid blueviolet;
+            outline: 1px solid blueviolet;
+        }
+        form input:active,
+        form input:focus,
+        form input:valid {
+            border: 2px solid cornflowerblue;
+            outline: 1px solid cornflowerblue;
+        }
+        form .select-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 30px 0 20px;
+            width: 100%;
+        }
+        form .select-wrapper select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: midnightblue;
+            border-radius: 7px;
+        }
+        form button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(to left, #d400d4, #00ccff, #d400d4);
+            background-size: 200%;
+            transition: .5s;
+            color: white;
+        }
+        form button:hover {
+            background-position: right;
+        }
+        form button:active {
+            transform: scale(0.98);
+        }
+        form #output {
+            color: royalblue;
+            letter-spacing: 2px;
+            font-size: 25px;
+            line-height: 50px;
+            margin: 20px 0 0;
+        }
+        @media screen and (max-width: 500px) {
+            body {
+                padding: 50px 0;
+            }
+            main {
+                width: 95%;
+            }
+            form {
+                width: 100%;
+            }
+        }
+        @media screen and (max-width: 400px) {
+            main::before {
+                inset: -650px 120px;
+            }
+            main::after {
+                inset: -650px 120px;
+            }
+            main:hover::before {
+                inset: -280px -200px;
+            }
+            main:hover::after {
+                inset: -280px -200px;
+            }
+        }
+    </style>
+</head>
+  <body>
+    <main>
+      <form>
+        <h1>Unit Converter</h1>
+        <input type="text" id="input" placeholder="Enter a value"></input>
+        <div class="select-wrapper">
+          <select id="unit-from">
+            <option value="meters">Meters</option>
+            <option value="liters">Liters</option>
+            <option value="kilograms">Kilograms</option>
+          </select>
+          <select id="unit-to">
+            <option value="feet">Feet</option>
+            <option value="gallons">Gallons</option>
+            <option value="pounds">Pounds</option>
+          </select>
+        </div>
+        <button type="button" onclick="convert()">Convert</button>
+        <p id="output"></p>
+      </form>
+    </main>
+  </body>
+  
+  <script>
+    function convert() {
+      var input = document.getElementById("input").value;
+      var unitFrom = document.getElementById("unit-from").value;
+      var unitTo = document.getElementById("unit-to").value;
+      var output;
+      if (unitFrom === "meters" && unitTo === "feet") {
+        output = input * 3.2808;
+      } else if (unitFrom === "liters" && unitTo === "gallons") {
+        output = input * 0.264172;
+      } else if (unitFrom === "kilograms" && unitTo === "pounds") {
+        output = input * 2.20462;
+      }
+      document.getElementById("output").innerHTML = output + " " + unitTo;
+    }
+  </script>
+</html>

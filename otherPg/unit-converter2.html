@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light Theme Unit Converter</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../SweetAlert/sweetalert2.all.js"></script>
+    <script src="../SweetAlert/sweetalert2.all.min.js"></script>
+    <script src="../SweetAlert/sweetalert2.js"></script>
+    <script src="../SweetAlert/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="../SweetAlert/sweetalert2.css">
+    <link rel="stylesheet" href="../SweetAlert/sweetalert2.min.css">
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins';
+            color: black;
+            letter-spacing: 2px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: aliceblue;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: fit-content;
+        }
+
+        .hero, .output {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero {
+            background: #6842FF;
+            padding: 30px;
+            border: none;
+        }
+
+        .hero h2 {
+            color: white;
+            margin: 30px 0 50px;
+            font-size: 1.7em;
+            text-shadow: 0px 0px 5px rgba(0,0,0,1);
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .hero input {
+            width: 120px;
+            max-width: fit-content;
+            font-size: 3em;
+            line-height: 1;
+            vertical-align: middle;
+            padding: 20px 20px 10px;
+            border-radius: 0px;
+            background: transparent;
+            font-weight: bold;
+            height: 90px;
+            color: white;
+            border: none;
+            border-bottom: 3px solid #F4F4F5;
+        }
+
+        .hero input::placeholder {
+            font-size: 1.2em;
+            line-height: 1;
+            color: rgba(255,255,255,0.4);
+            font-weight: bold;
+            vertical-align: middle;
+            letter-spacing: 5px;
+        }
+
+        .hero input:active,
+        .hero input:focus,
+        .hero input:valid {
+            border: 3px solid lightblue;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            display: none; 
+            -webkit-appearance: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .convert-btn {
+            width: 130px;
+            height: 40px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 25px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+            7px 7px 20px 0px rgba(0,0,0,.1),
+            4px 4px 5px 0px rgba(0,0,0,.1);
+            outline: none;
+        }
+        
+        .convert-btn:active {
+            transform: scale(0.97);
+        }
+
+        .convert {
+            position: relative;
+            right: 20px;
+            bottom: 20px;
+            border:none;
+            box-shadow: none;
+            width: 130px;
+            height: 40px;
+            line-height: 42px;
+            -webkit-perspective: 230px;
+            perspective: 230px;
+            margin: 30px 0 20px;
+        }
+
+        .convert span {
+            background: rgb(0,172,238);
+            background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+            color: white;
+            display: block;
+            position: absolute;
+            width: 130px;
+            height: 40px;
+            box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+            7px 7px 20px 0px rgba(0,0,0,.1),
+            4px 4px 5px 0px rgba(0,0,0,.1);
+            border-radius: 5px;
+            margin:0;
+            text-align: center;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-transition: .3s;
+            transition: .3s;
+        }
+
+        .convert span:nth-child(1) {
+            -webkit-transform: rotateX(90deg);
+            -moz-transform: rotateX(90deg);
+            transform: rotateX(90deg);
+            -webkit-transform-origin: 50% 50% -20px;
+            -moz-transform-origin: 50% 50% -20px;
+            transform-origin: 50% 50% -20px;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .convert span:nth-child(2) {
+            -webkit-transform: rotateX(0deg);
+            -moz-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+            -webkit-transform-origin: 50% 50% -20px;
+            -moz-transform-origin: 50% 50% -20px;
+            transform-origin: 50% 50% -20px;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .convert:hover span:nth-child(1), .convert:focus span:nth-child(1) {
+            box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+            7px 7px 20px 0px rgba(0,0,0,.1),
+            4px 4px 5px 0px rgba(0,0,0,.1);
+            -webkit-transform: rotateX(0deg);
+            -moz-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+        }
+
+        .convert:hover span:nth-child(2), .convert:focus span:nth-child(2) {
+            box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+            7px 7px 20px 0px rgba(0,0,0,.1),
+            4px 4px 5px 0px rgba(0,0,0,.1);
+            color: transparent;
+            -webkit-transform: rotateX(-90deg);
+            -moz-transform: rotateX(-90deg);
+            transform: rotateX(-90deg);
+        }
+        
+        .output {
+            justify-content: space-around;
+            gap: 25px;
+            background: #1F2937;
+            padding: 25px;
+        }
+        
+        .length, .volume, .mass {
+            width: 100%;
+            height: auto;
+            background: #273449;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .output h2 {
+            color: #CCC1FF;
+            font-weight: 500;
+            font-family: 'Arial', Arial, sans-serif;
+            margin: 15px 0 30px;
+        }
+        
+        .output p {
+            color: white;
+            margin: 15px 0;
+            vertical-align: middle;
+            font-size: 1em;
+            line-height: 1;
+        }
+        .values {
+            color: #6842FF;
+            font-size: 1.9em;
+            vertical-align: middle;
+        }
+        
+        .or {
+            background-color: #6842FF;
+            color: #fff !important;
+            display: inline-block;
+            line-height: 1;
+            padding: 15px 11px;
+            border-radius: 50%;
+            text-transform: uppercase;
+        }
+        
+        .output.light {
+            background: #F4F4F5;
+        }
+        
+        .length.light, .volume.light, .mass.light {
+            background: #fff;
+        }
+        
+        .length.light h2, .volume.light h2, .mass.light h2 {
+            color: #5A527A;
+        }
+        
+        .length.light p, .volume.light p, .mass.light p {
+            color: #111;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h2>Metric/Imperial Unit Conversion</h2>
+            <input type="number" placeholder="20" id="inputTask" required="required">
+       <button class="convert-btn convert" id="convert-button" onclick="convertInput()"><span>Convert</span><span>Convert</span></button>
+        </div>
+        <div class="output light">
+            <div class="length light">
+                <h2>Length (Meter/Feet)</h2>
+                <p><span class="values" id="mtr">0</span> Meters = <span class="values" id="ft">0</span> Feets  <br> <p class="or">Or</p> <br>
+                    <span class="values" id="Toft">0</span> Feets = <span class="values" id="Tomtr">0</span> Meters</p>
+            </div>
+            <div class="volume light">
+                <h2>Volume (Liters/Gallons)</h2>
+                <p><span class="values" id="ltr">0</span> Liters = <span class="values" id="gal">0</span> Gallons  <br> <p class="or">Or</p> <br> 
+                    <span class="values" id="Togal">0</span> Gallons = <span class="values" id="Toltr">0</span> Liters</p>
+            </div>
+            <div class="mass light">
+                <h2>Mass (Kilograms/Pounds)</h2>
+                <p><span class="values" id="kg">0</span> Kilos = <span class="values" id="pound">0</span> Pounds  <br> <p class="or">Or</p> <br>  
+                    <span class="values" id="Topound">0</span> Pounds = <span class="values" id="Tokg">0</span> Kilos</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../converter.js"></script>
+</body>
+</html>
